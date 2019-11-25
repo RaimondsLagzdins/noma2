@@ -56,7 +56,7 @@ AppAsset::register($this);
             ),
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Register', 'url' => ['/site/register']]
+                ['label' => 'Register', 'url' => ['/register/index']]
 
             ) : (
                 '<li>'
