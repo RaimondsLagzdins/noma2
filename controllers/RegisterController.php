@@ -81,15 +81,7 @@ class RegisterController extends Controller
                 ->where( [ 'EMAIL' => $model->EMAIL ] )
                 ->exists();
 
-            if(isset($tmpUsername)){
-                echo 'pidars';
-                echo $model->USERNAME;
-                die;
-            }
-            if(!isset($tmpEmail)){
-                echo 'sdasdasd2222222';
-                die;
-            }
+          
             if (!isset($tmpUsername) && !isset($tmpEmail)){
                 $model->save();
             }else{
