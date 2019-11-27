@@ -65,52 +65,26 @@ class RegisterController extends Controller
     public function actionIndex()
     {
         $model = new USER();
-       // if(isset('register'));
-        if ($model->load(Yii::$app->request->post()) ) {
+        $btnText = 'Reģistrēties';
 
+        if ($model->load(Yii::$app->request->post()) ) {
             $model->REG_DATE = date("Y-m-d");
 
-            $tmpUsername = null;
-            $tmpEmail = null;
+            $model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
+            if($model->validate()) {
+                // paroles saglabāšana hash formātā
 
-            $tmpUsername = User::find()
-                ->where( [ 'USERNAME' => $model->USERNAME ] )
-                ->exists();
-
-            $tmpEmail = User::find()
-                ->where( [ 'EMAIL' => $model->EMAIL ] )
-                ->exists();
-
-            if(isset($tmpUsername)){
-                echo 'pidars';
-                echo $model->USERNAME;
-                die;
-            }
-            if(!isset($tmpEmail)){
-                echo 'sdasdasd2222222';
-                die;
-            }
-            if (!isset($tmpUsername) && !isset($tmpEmail)){
                 $model->save();
-            }else{
-
-                if(isset($tmpUsername)){
-                    Yii::$app->session->addFlash('error', "Lietotājvārds ir aizņemts!");
-                }else if(isset($tmpEmail)){
-                    Yii::$app->session->addFlash('error', "Epasts ir aizņemts!");
-                }
-
-                return $this->render('create', [
-                    'model' => $model,
-
-                ]);
-            }
-
-            return $this->redirect(['view', 'id' => $model->ID]);
+                return $this->redirect(['view', 'id' => $model->ID]);
+            } 
+            return $this->render('create', [
+                'model' => $model,
+                'btnText' => $btnText
+            ]); 
         }
-
         return $this->render('create', [
             'model' => $model,
+            'btnText' => $btnText
         ]);
     }
 
@@ -124,13 +98,18 @@ class RegisterController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->PASSWORD = null;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
+
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID]);
         }
-
+        $btnText = 'Aktualizēt';
         return $this->render('update', [
             'model' => $model,
+            'btnText' => $btnText
         ]);
     }
 

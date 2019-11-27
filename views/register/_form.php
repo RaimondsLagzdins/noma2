@@ -20,10 +20,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'PASSWORD')->passwordInput(['maxlength' => true]) ?>
 
+
+
     <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Reģistrācija', ['class' => 'btn btn-success', 'name'=>'register']) ?>
+        <?= Html::submitButton($btnText, ['class' => 'btn btn-success', 'name'=>'register']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->ID], [
+        <?= Html::a('Aktualizēt', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Dzēst', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Vai jūs tiešām vēlieties dzēst savu lietotāju?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'USERNAME',
             'NAME',
             'SURNAME',
-            'PASSWORD',
             'EMAIL:email',
             'REG_DATE',
         ],

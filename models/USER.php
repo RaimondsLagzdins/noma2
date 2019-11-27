@@ -17,6 +17,8 @@ use Yii;
  */
 class USER extends \yii\db\ActiveRecord
 {
+    public $PASSWORD2;
+    public $email;
     /**
      * {@inheritdoc}
      */
@@ -31,11 +33,13 @@ class USER extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['USERNAME', 'NAME', 'SURNAME', 'PASSWORD', 'EMAIL', 'REG_DATE'], 'required'],
+            [['USERNAME', 'NAME', 'SURNAME', 'EMAIL','PASSWORD', 'REG_DATE'], 'required', 'message' => '{attribute} nedrīkst būt tukšs'],
             [['REG_DATE'], 'safe'],
+            [['EMAIL', 'USERNAME'], 'unique', 'message' => '{attribute} ir jau aizņemts, lūdzu mēģiniet citu'],
             [['USERNAME', 'NAME', 'SURNAME'], 'string', 'max' => 40],
-            [['PASSWORD'], 'string', 'max' => 200],
+            [['PASSWORD','PASSWORD2'], 'string', 'min' => 8, 'tooShort' => '{attribute} parole nedrīkst būt īsāka par 8 simboliem'],
             [['EMAIL'], 'string', 'max' => 50],
+            //['PASSWORD2', 'compare', 'compareAttribute' => 'PASSWORD', 'message' => 'parolēm jābūt vienādām'],
         ];
     }
 
@@ -51,7 +55,8 @@ class USER extends \yii\db\ActiveRecord
             'SURNAME' => 'Uzvārds',
             'PASSWORD' => 'Parole',
             'EMAIL' => 'Epasts',
-            'REG_DATE' => 'Reg Date',
+            'REG_DATE' => 'Reģistrācijas datums',
+            //'PASSWORD2' => 'Atkārtota parole',
         ];
     }
 
