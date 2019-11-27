@@ -70,10 +70,10 @@ class RegisterController extends Controller
         if ($model->load(Yii::$app->request->post()) ) {
             $model->REG_DATE = date("Y-m-d");
 
-            $model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
             if($model->validate()) {
                 // paroles saglabāšana hash formātā
 
+                $model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->ID]);
             } 
