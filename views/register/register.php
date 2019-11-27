@@ -10,34 +10,66 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Register';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<form method="POST" >
-<div class="container register-form">
-    <div class="form">
-        <div class="note">
-            <p>Reģistrēties.</p>
-        </div>
-
-        <div class="form-content">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control vards" name="vards" placeholder="Vārds" value=""/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control numurs" placeholder="telefona numurs" value=""/>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control parole" placeholder="Parole" value=""/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control parole2" placeholder="Atkārtota parole" value=""/>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-</div>
-</form>
+<!--<form method="POST" >-->
+<!--<div class="container register-form">-->
+<!--    <div class="form">-->
+<!--        <div class="note">-->
+<!--            <p>Reģistrēties.</p>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="form-content">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control vards" name="vards" placeholder="Vārds" value=""/>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control numurs" placeholder="telefona numurs" value=""/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control parole" placeholder="Parole" value=""/>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control parole2" placeholder="Atkārtota parole" value=""/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button type="button" class="btn btn-primary">Submit</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</form>-->
+<!--<div class="site-register">-->
+<!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
+<!---->
+<!--    <p>Please fill out the following fields to register:</p>-->
+<!---->
+<!--    --><?php //$form = ActiveForm::begin([
+//        'id' => 'login-form',
+//        'layout' => 'horizontal',
+//        'fieldConfig' => [
+//            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+//            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+//        ],
+//    ]); ?>
+<!---->
+<!--    --><?//= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+<!---->
+<!--    --><?//= $form->field($model, 'password')->passwordInput() ?>
+<!---->
+<!---->
+<!--    <div class="form-group">-->
+<!--        <div class="col-lg-offset-1 col-lg-11">-->
+<!--            --><?//= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+<!--        </div>-->
+<!--    </div>-->
+<!---->
+<!--    --><?php //ActiveForm::end(); ?>
+<!---->
+<!--    <div class="col-lg-offset-1" style="color:#999;">-->
+<!--        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>-->
+<!--        To modify the username/password, please check out the code <code>app\models\User::$users</code>.-->
+<!--    </div>-->
+<!--</div>-->
