@@ -97,6 +97,8 @@ class RegisterController extends Controller
      */
     public function actionUpdate($id)
     {
+        $session = Yii::$app->session;
+
         $model = $this->findModel($id);
         $model->PASSWORD = null;
 
