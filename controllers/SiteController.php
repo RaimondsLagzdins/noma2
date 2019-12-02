@@ -77,13 +77,17 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            echo Yii::$app->user->getId();
+            die;
             return $this->goBack();
         }
 
         $model->password = '';
+
         return $this->render('login', [
             'model' => $model,
         ]);
+
     }
 
     /**

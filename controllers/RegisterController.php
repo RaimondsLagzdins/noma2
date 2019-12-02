@@ -75,7 +75,8 @@ class RegisterController extends Controller
 
                 $model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
                 $model->save();
-                return $this->redirect(['view', 'id' => $model->ID]);
+
+                return $this->redirect(['site/login']);
             } 
             return $this->render('create', [
                 'model' => $model,
@@ -106,6 +107,8 @@ class RegisterController extends Controller
             $model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
 
             $model->save();
+
+
             return $this->redirect(['view', 'id' => $model->ID]);
         }
         $btnText = 'Aktualizēt';

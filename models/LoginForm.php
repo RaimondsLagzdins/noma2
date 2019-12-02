@@ -19,7 +19,7 @@ class LoginForm extends Model
 
     private $_user = false;
 
-
+    public $hash;
     /**
      * @return array the validation rules.
      */
@@ -42,12 +42,13 @@ class LoginForm extends Model
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword($attribute)
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
+            $hash = $user->PASSWORD;
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!Yii::$app->getSecurity()->validatePassword($this->password, $hash)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -73,7 +74,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User1::findByUsername($this->username);
+            $this->_user = USER::findByUsername($this->username);
         }
 
         return $this->_user;

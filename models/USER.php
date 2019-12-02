@@ -15,10 +15,16 @@ use Yii;
  * @property string $EMAIL
  * @property string $REG_DATE
  */
-class USER extends \yii\db\ActiveRecord
+class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $PASSWORD2;
     public $email;
+    public $user;
+    public $id;
+    public $username;
+    public $password;
+    public $authKey;
+    public $accessToken;
     /**
      * {@inheritdoc}
      */
@@ -71,12 +77,58 @@ class USER extends \yii\db\ActiveRecord
 
     public static function findByUsername($username)
     {
+//        foreach (self::$users as $user) {
+//            if (strcasecmp($user['username'], $username) === 0) {
+//                return new static($user);
+//            }
+//        }
+        $user = User::find()->where(['USERNAME' => $username])->one();
+        return $user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function findIdentity($id)
+    {
+        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
         foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
+            if ($user['accessToken'] === $token) {
                 return new static($user);
             }
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
     }
 }
