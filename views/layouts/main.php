@@ -10,6 +10,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+
+use app\models\LoginForm;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -35,6 +38,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -56,7 +60,7 @@ AppAsset::register($this);
             ),
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Register', 'url' => ['/register/index']]
+                ['label' => 'Register', 'url' => ['/site/register']]
 
             ) : (
                 '<li>'
@@ -71,6 +75,7 @@ AppAsset::register($this);
         ],
     ]);
     NavBar::end();
+
     ?>
 
     <div class="container">

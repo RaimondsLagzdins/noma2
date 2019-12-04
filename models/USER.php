@@ -14,6 +14,8 @@ use Yii;
  * @property string $PASSWORD
  * @property string $EMAIL
  * @property string $REG_DATE
+ * @property string $AUTHKEY
+ * @property string $ACCESSTOKEN
  */
 class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -45,6 +47,7 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['USERNAME', 'NAME', 'SURNAME'], 'string', 'max' => 40],
             [['PASSWORD','PASSWORD2'], 'string', 'min' => 8, 'tooShort' => '{attribute} parole nedrīkst būt īsāka par 8 simboliem'],
             [['EMAIL'], 'string', 'max' => 50],
+            [['AUTHKEY','ACCESSTOKEN'],'string',  'max' => 255],
             //['PASSWORD2', 'compare', 'compareAttribute' => 'PASSWORD', 'message' => 'parolēm jābūt vienādām'],
         ];
     }
@@ -77,13 +80,8 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findByUsername($username)
     {
-//        foreach (self::$users as $user) {
-//            if (strcasecmp($user['username'], $username) === 0) {
-//                return new static($user);
-//            }
-//        }
-        $user = User::find()->where(['USERNAME' => $username])->one();
-        return $user;
+
+        return self::findOne(['USERNAME' => $username]);
     }
 
     /**
@@ -91,7 +89,7 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return self::findOne($id);
     }
 
     /**
@@ -99,13 +97,9 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
 
-        return null;
+
+        return self::findOne(['ACCESSTOKEN' => $token]);
     }
 
     /**
@@ -113,7 +107,7 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getId()
     {
-        return $this->id;
+        return $this->ID;
     }
 
     /**
@@ -121,7 +115,7 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->AUTHKEY;
     }
 
     /**
@@ -130,5 +124,10 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
+    }
+
+    public function validatePassword($password){
+
+        return password_verify($password, $this->PASSWORD);
     }
 }

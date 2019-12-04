@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-
+use app\models\USER;
 class SiteController extends Controller
 {
     /**
@@ -77,8 +77,6 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            echo Yii::$app->user->getId();
-            die;
             return $this->goBack();
         }
 
@@ -132,8 +130,31 @@ class SiteController extends Controller
 
     public function actionRegister()
     {
-//        $asd = Yii::$app->request->getParam(‘vards’);
-//        echo $asd;
-        return $this->render('register');
+        $model = new USER();
+
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            $model->REG_DATE = date('Y-m-d H:i:s');
+            if($model->validate()) {
+
+                // paroles saglabāšana hash formātā
+
+                //$model->PASSWORD = Yii::$app->getSecurity()->generatePasswordHash($model->PASSWORD);
+                $model->PASSWORD = password_hash($model->PASSWORD, PASSWORD_ARGON2I);
+                $model->AUTHKEY = md5(random_bytes(5));
+                $model->ACCESSTOKEN = password_hash(random_bytes(10),PASSWORD_DEFAULT);
+
+                if($model->save()){
+                    return $this->redirect(['login']);
+                }
+
+
+            }
+
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 }
