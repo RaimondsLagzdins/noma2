@@ -16,6 +16,7 @@ use Yii;
  * @property string $REG_DATE
  * @property string $AUTHKEY
  * @property string $ACCESSTOKEN
+ * @property int $ROLE
  */
 class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -27,6 +28,10 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public $password;
     public $authKey;
     public $accessToken;
+
+    const ROLE_USER = 10;
+    const ROLE_ADMIN = 20;
+
     /**
      * {@inheritdoc}
      */
@@ -46,8 +51,10 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['EMAIL', 'USERNAME'], 'unique', 'message' => '{attribute} ir jau aizņemts, lūdzu mēģiniet citu'],
             [['USERNAME', 'NAME', 'SURNAME'], 'string', 'max' => 40],
             [['PASSWORD','PASSWORD2'], 'string', 'min' => 8, 'tooShort' => '{attribute} parole nedrīkst būt īsāka par 8 simboliem'],
-            [['EMAIL'], 'string', 'max' => 50],
+            [['EMAIL'], 'email', 'message' => '{attribute} nav pareiza epasta adrese'],
             [['AUTHKEY','ACCESSTOKEN'],'string',  'max' => 255],
+            ['ROLE', 'default', 'value' => 10],
+            ['ROLE', 'in', 'range' => [self::ROLE_USER, self::ROLE_ADMIN]],
             //['PASSWORD2', 'compare', 'compareAttribute' => 'PASSWORD', 'message' => 'parolēm jābūt vienādām'],
         ];
     }
@@ -129,5 +136,17 @@ class USER extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password){
 
         return password_verify($password, $this->PASSWORD);
+    }
+
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['USERNAME' => $username, 'ROLE' => self::ROLE_ADMIN])){
+
+            return true;
+        } else {
+
+            return false;
+        }
+
     }
 }

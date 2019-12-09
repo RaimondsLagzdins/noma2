@@ -113,3 +113,9 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.navbar-custom{
+    background-color: green !important;
+}
+.navbar-inverse > li > a{
+    color: green !important;
+}

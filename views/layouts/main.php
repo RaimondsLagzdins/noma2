@@ -11,8 +11,6 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 
-use app\models\LoginForm;
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -23,7 +21,7 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode('Pirts noma') ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -32,48 +30,39 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Pirts noma',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => ' navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $labels =[
+        ['label' => 'Sākums', 'url' => ['/site/index']],
+        ['label' => 'Saziņa', 'url' => ['/site/contact']],
+    ];
+    if(Yii::$app->user->isGuest){
+        array_push($labels,['label' => 'Pieslēgties', 'url' => ['/site/login']],['label' => 'Reģistrēties', 'url' => ['/site/register']]);
+    }else{
+        if(Yii::$app->user->identity->ROLE == 20){
+            array_push($labels,['label' => 'ADMIN PANELIS', 'url' => ['/admin/index']]);
+        }
 
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-
-            ) : (
-                '<li>'
+         array_push($labels,'<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
+                    'Atslēgties (' . Yii::$app->user->identity->USERNAME . ')',
+                    ['class' => 'btn btn-link logout mynavbar']
                 )
                 . Html::endForm()
-                . '</li>'
-            ),
+                . '</li>');
 
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Register', 'url' => ['/site/register']]
+    }
 
-            ) : (
-                '<li>'
-//                . Html::beginForm(['/site/logout'], 'post')
-//                . Html::submitButton(
-//                    'Logout (' . Yii::$app->user->identity->username . ')',
-//                    ['class' => 'btn btn-link logout']
-//                )
-//                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right mynavbar'],
+        'items' => $labels
+    ]
+    );
     NavBar::end();
 
     ?>
@@ -90,8 +79,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Raimonds <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 

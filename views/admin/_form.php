@@ -18,11 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'SURNAME')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'PASSWORD')->passwordInput(['maxlength' => true]) ?>
-
-
-
     <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'ROLE')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($btnText, ['class' => 'btn btn-success', 'name'=>'register']) ?>

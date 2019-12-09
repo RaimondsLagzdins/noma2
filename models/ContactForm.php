@@ -24,11 +24,11 @@ class ContactForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            [['name', 'email', 'subject', 'body'], 'required', 'message' => '{attribute} lauks nevar būt tukšs'],
             // email has to be a valid email address
-            ['email', 'email'],
+            ['email', 'email','message' => '{attribute} nav pareiza epasta adrese'],
             // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha', 'message' => '{attribute} CAPTCHA kods nav aizpildīts pareizi'],
         ];
     }
 
@@ -38,7 +38,11 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'verifyCode' => 'Verifikācijas kods',
+            'name' => 'Vārds',
+            'email' => 'e-pasts',
+            'subject' => 'Temats',
+            'body' => 'Ziņa',
         ];
     }
 
@@ -51,9 +55,9 @@ class ContactForm extends Model
     {
         if ($this->validate()) {
             Yii::$app->mailer->compose()
-                ->setTo($email)
-                ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-                ->setReplyTo([$this->email => $this->name])
+                ->setTo(Yii::$app->params['adminEmail'])
+                ->setFrom($email)
+                ->setReplyTo($email)
                 ->setSubject($this->subject)
                 ->setTextBody($this->body)
                 ->send();

@@ -6,16 +6,12 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Admin panel';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
 
     <?= GridView::widget([
@@ -23,13 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID',
             'USERNAME',
             'NAME',
             'SURNAME',
-            'PASSWORD',
-            //'EMAIL:email',
-            //'REG_DATE',
+            'EMAIL:email',
+            'REG_DATE',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
