@@ -23,6 +23,17 @@ $this->title = 'Saziņa';
 
     <?php else: ?>
 
+    <?php
+        if(!Yii::$app->user->isGuest){
+            $model->name = Yii::$app->user->identity->NAME;
+            $model->email = Yii::$app->user->identity->EMAIL;
+        }
+    ?>
+
+
+
+
+
         <p>
             Ja jums ir kādi jautājumi lūdzu aizpildiet šo formu, lai sazinātos
         </p>
