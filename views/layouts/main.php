@@ -43,10 +43,10 @@ AppAsset::register($this);
     if(Yii::$app->user->isGuest){
         array_push($labels,['label' => 'Pieslēgties', 'url' => ['/site/login']],['label' => 'Reģistrēties', 'url' => ['/site/register']]);
     }else{
+        array_push($labels, ['label' => 'Mani sludinājumi', 'url' => ['/offer/index']]);
         if(Yii::$app->user->identity->ROLE == 20){
             array_push($labels,['label' => 'ADMIN PANELIS', 'url' => ['/admin/index']]);
         }
-
          array_push($labels,'<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(

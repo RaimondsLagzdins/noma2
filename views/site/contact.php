@@ -29,11 +29,7 @@ $this->title = 'Saziņa';
             $model->email = Yii::$app->user->identity->EMAIL;
         }
     ?>
-
-
-
-
-
+    
         <p>
             Ja jums ir kādi jautājumi lūdzu aizpildiet šo formu, lai sazinātos
         </p>
